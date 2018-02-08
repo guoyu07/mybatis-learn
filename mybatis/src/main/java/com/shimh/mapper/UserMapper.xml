@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shimh.mapper.UserMapper">
+	
+
+	<sql id="userColumns">
+		${alias}.id,${alias}.name,${alias}.age
+	</sql>
+	
+	<resultMap  id="userRoleAndPermissionResultMap" type="User">
+		<id column="user_id" property="id"/>
+		<result column="user_name" property="name"/>
+		<result column="user_age" property="age"/>
+		
+		<collection property="roles" ofType="Role">
+		
+			<id column="role_id" property="id"/>
+			<result column="role_name" property="name"/>
+			<result column="role_roleCode" property="roleCode"/>
+			<collection property="permissions" ofType="Permission">
+				<id column="permission_id" property="id"/>
+				<result column="permission_name" property="name"/>
+				<result column="permission_permissionCold" property="permissionCold"/>
+				<result column="permission_description" property="description"/>
+			</collection>
+			
+		</collection>
+	</resultMap>
+
+
+	<select id="getUserMapById" resultType="hashmap">
+    	select 
+			<include refid="userColumns"><property name="alias" value="u"/></include>
+		from user u where id = #{id}
+  	</select>
+  	
+  	<select id="getUserById" resultType="User">
+    	select 
+			<include refid="userColumns"><property name="alias" value="u"/></include>
+		from user u where id = #{id}
+  	</select>
+  	
+  	<select id="getUserRoleAndPermissionByUserId" resultMap="userRoleAndPermissionResultMap">
+    	select 
+    		u.id as user_id,
+    		u.name as user_name,
+    		u.age as user_age,
+    		r.id as role_id,
+    		r.name as role_name,
+    		r.roleCode as role_roleCode,
+    		p.id as permission_id,
+    		p.name as permission_name,
+    		p.permissionCold as permission_permissionCold,
+    		p.description as permission_description
+    	
+    	from user u 
+    		left join user_role ur on u.id = ur.user_id
+    		left join role r on r.id = ur.role_id
+    		left join role_permission rp on r.id = rp.role_id
+    		left join permission p on p.id = rp.permission_id 
+		where u.id = #{id}
+  	</select>
+  
+  
+  	<insert id="saveUser">
+		insert into user (name,age)
+			values (#{name},#{age})
+	</insert>
+  
+  
+	<update id="updateUser">
+	  	update user set
+		    name = #{name},
+		    age = #{age},
+	  	where id = #{id}
+	</update>
+	
+	<delete id="removeUser">
+	  	delete from user where id = #{id}
+	</delete>  
+  
+</mapper>

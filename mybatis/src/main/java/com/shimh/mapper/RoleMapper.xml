@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shimh.mapper.RoleMapper">
+	
+	<resultMap  id="roleAndPermissionResultMap" type="Role">
+		<id column="role_id" property="id"/>
+		<result column="role_name" property="name"/>
+		<result column="role_roleCode" property="roleCode"/>
+		<collection property="permissions" ofType="Permission">
+			<id column="permission_id" property="id"/>
+			<result column="permission_name" property="name"/>
+			<result column="permission_permissionCold" property="permissionCold"/>
+			<result column="permission_description" property="description"/>
+		</collection>
+			
+	</resultMap>
+
+
+</mapper>

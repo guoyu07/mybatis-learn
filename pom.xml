@@ -1,0 +1,31 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.shimh</groupId>
+    <artifactId>mybatis-learn</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1</version>
+    <name>${project.artifactId}</name>
+    <description>The demo module of mybatis-learn project</description>
+    <properties>
+       <mybatis-version>3.4.5</mybatis-version>
+    </properties>
+    
+    
+    <modules>
+        <module>mybatis</module>
+        <module>mybatis-spring</module>
+    </modules>
+
+    <dependencyManagement>
+    	<dependencies>
+    		<dependency>
+			    <groupId>org.mybatis</groupId>
+			    <artifactId>mybatis</artifactId>
+			    <version>${mybatis-version}</version>
+			</dependency>
+    	</dependencies>
+        
+    </dependencyManagement>
+
+</project>
